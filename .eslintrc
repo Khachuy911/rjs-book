@@ -1,7 +1,10 @@
 {
+    "extends": [
+    "plugin:react/jsx-runtime"
+  ],
     "settings": {
         "react": {
-            "version": "detect",
-        },
+            "version": "detect"
+        }
     },
 }
