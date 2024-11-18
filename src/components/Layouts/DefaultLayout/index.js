@@ -1,10 +1,19 @@
-import Header from './component/Header';
+import React from 'react';
+import { Layout } from 'antd';
 
-export default function DefaultLayout({ children }) {
+import Headers from './component/header/Header';
+import SideBar from './component/content/Sidebar';
+import Contents from './component/content/Content';
+
+const DefaultLayout = ({ children }) => {
   return (
-    <div>
-      <Header></Header>
-      {children}
-    </div>
+    <Layout>
+      <Headers />
+      <Layout>
+        <SideBar />
+        <Contents>{children}</Contents>
+      </Layout>
+    </Layout>
   );
-}
+};
+export default DefaultLayout;
