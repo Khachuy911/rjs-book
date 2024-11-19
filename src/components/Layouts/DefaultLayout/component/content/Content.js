@@ -8,7 +8,9 @@ function Contents({ children }) {
   return (
     <Layout
       style={{
-        padding: '0 24px 24px'
+        marginLeft: 195,
+        marginTop: 30,
+        padding: '0 10px'
       }}
     >
       <Content

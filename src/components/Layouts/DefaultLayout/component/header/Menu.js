@@ -1,16 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
 
 function Menus() {
+  const location = useLocation();
   const items1 = ['HOME', 'SHOPPING CART', 'FLASH SALE', 'UPLOAD'].map((key) => {
     let path;
     switch (key) {
       case 'SHOPPING CART':
-        path = '/';
+        path = '/carts';
         break;
       case 'FLASH SALE':
-        path = '/';
+        path = '/sales';
         break;
       case 'UPLOAD':
         path = '/uploads';
@@ -20,7 +21,7 @@ function Menus() {
         break;
     }
     return {
-      key,
+      key: path,
       label: <Link to={path}>{key}</Link>,
       style: { minWidth: '130px', textAlign: 'center' }
     };
@@ -29,7 +30,7 @@ function Menus() {
     <Menu
       theme='dark'
       mode='horizontal'
-      defaultSelectedKeys={['HOME']}
+      selectedKeys={[location.pathname]}
       items={items1}
       style={{
         flex: 1,

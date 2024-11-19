@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import Headers from './component/header/Header';
 import SideBar from './component/content/Sidebar';
 import Contents from './component/content/Content';
+import Footers from './component/footer';
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -13,6 +14,7 @@ const DefaultLayout = ({ children }) => {
         <SideBar />
         <Contents>{children}</Contents>
       </Layout>
+      <Footers />
     </Layout>
   );
 };

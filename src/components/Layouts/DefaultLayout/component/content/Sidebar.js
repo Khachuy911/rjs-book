@@ -6,7 +6,7 @@ import {
   MailOutlined,
   SettingOutlined
 } from '@ant-design/icons';
-import { Divider, Menu, Switch, theme } from 'antd';
+import { Divider, Layout, Menu, Switch, theme } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 const items = [
   {
@@ -95,14 +95,19 @@ const SideBar = () => {
   } = theme.useToken();
   return (
     <Sider
-      width={200}
       style={{
-        background: colorBgContainer
+        background: colorBgContainer,
+        overflow: 'auto',
+        position: 'fixed',
+        insetInlineStart: 0,
+        top: 60,
+        bottom: 0,
+        flexBasis: '50%'
       }}
     >
       <Menu
         style={{
-          height: '100%',
+          height: 'calc(100% - 80px)', // Trừ chiều cao phần Switch
           borderRight: 0
         }}
         defaultSelectedKeys={['1']}
