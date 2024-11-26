@@ -1,4 +1,40 @@
+$background-image-url: 'https://itoday.vn/uploads/images/blog/quyentrung/2023/03/17/1-1679017482.png';
+$background-image-url_2: 'https://lh3.googleusercontent.com/z8GLc6ksuXyPqlF2l_t2WFFcfNn_SHD_Wx4XzmBXgvX0fR8UFALg4I1fy2XljmWZ0T9zU7d4qs0WtitznrZO-yLyaWI32vc_op2GCqTfFc256Q=s750';
+
 .wrapper {
-    min-height: 660px;
-    background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 97.9vh;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(#{$background-image-url_2});
+    background-color: rgb(241, 239, 237);
+    background-size: cover; // Make the image cover the area
+    background-position: center; // Center the image
+    background-repeat: no-repeat; // Avoid image repetition
+    filter: blur(4px); // Apply blur effect
+    -webkit-filter: blur(4px); // Safari support
+    z-index: -1; // Place it behind other content
+  }
+}
+
+.form_main {
+  //   text-align: center;
+  min-width: 500px;
+  padding: 50px;
+  box-shadow: 1px 1px 5px rgb(114, 113, 113);
+  border-radius: 3px;
+  background-color: rgb(215, 227, 238);
+}
+
+.input_main {
+  min-width: 500px;
+  min-height: 50px;
 }

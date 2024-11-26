@@ -31,7 +31,7 @@ const Avatars = () => {
       style: { width: '100px' }
     },
     {
-      label: 'Login',
+      label: <Link to='/login'>Login</Link>,
       key: '2',
       icon: <LoginOutlined />
     },
