@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Flex } from 'antd';
 import clsx from 'clsx';
 
 import style from './Login.module.scss';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({setToken}) => {
+const Login = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  sessionStorage.removeItem('token');
 
   const handleLogin = (values) => {
-    console.log('Received values of form: ', values);
-    setToken({token: '123456dfgdsvv'});
-    window.location.href = '/';
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      console.log('Received values of form: ', values);
+      sessionStorage.setItem('token', JSON.stringify(values));
+      navigate('/');
+    }, 2000);
   };
 
   return (
     <div className={clsx(style.wrapper)}>
       <div className={clsx(style.form_main)}>
-        <h2>Mahudo</h2>
+        <h2>Welcome</h2>
         <Form
           name='login'
           initialValues={{
@@ -71,11 +80,12 @@ const Login = ({setToken}) => {
               block
               type='primary'
               htmlType='submit'
+              loading={loading}
             >
               Log in
             </Button>
           </Form.Item>
-          Let <a href=''>Forgot password </a>
+          <a href=''>Forgot password </a>
           or <a href=''>Register now!</a>
         </Form>
       </div>

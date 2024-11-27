@@ -1,3 +1,4 @@
+import React from 'react';
 import { Layout, theme } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 

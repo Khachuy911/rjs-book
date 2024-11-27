@@ -1,10 +1,10 @@
 import React from 'react';
 import { Layout } from 'antd';
 
-import Headers from './component/header/Header';
-import SideBar from './component/content/Sidebar';
-import Contents from './component/content/Content';
-import Footers from './component/footer';
+import Headers from './component/header/Header.jsx';
+import SideBar from './component/content/Sidebar.jsx';
+import Footers from './component/footer/Footer.jsx';
+import Contents from './component/content/Content.jsx';
 
 const DefaultLayout = ({ children }) => {
   return (

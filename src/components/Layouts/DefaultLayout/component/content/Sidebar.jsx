@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   AppstoreOutlined,
   CalendarOutlined,
@@ -6,7 +6,7 @@ import {
   MailOutlined,
   SettingOutlined
 } from '@ant-design/icons';
-import { Divider, Layout, Menu, Switch, theme } from 'antd';
+import { Menu, theme } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 const items = [
   {
@@ -82,14 +82,6 @@ const items = [
   }
 ];
 const SideBar = () => {
-  const [mode, setMode] = useState('inline');
-  const [themes, setTheme] = useState('light');
-  const changeMode = (value) => {
-    setMode(value ? 'vertical' : 'inline');
-  };
-  const changeTheme = (value) => {
-    setTheme(value ? 'dark' : 'light');
-  };
   const {
     token: { colorBgContainer }
   } = theme.useToken();
@@ -111,16 +103,8 @@ const SideBar = () => {
           borderRight: 0
         }}
         defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode={mode}
-        theme={themes}
         items={items}
       />
-      <Switch onChange={changeMode} /> Change Mode
-      <Divider type='vertical' />
-      <br />
-      <Switch onChange={changeTheme} /> Change Style
-      <br />
     </Sider>
   );
 };
