@@ -1,7 +1,7 @@
 import { Avatar, Badge, Button, Dropdown, Space } from 'antd';
 import React, { useState } from 'react';
 
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, GiftOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import {
   UserOutlined,
   SettingOutlined,
@@ -39,22 +39,16 @@ const Avatars = () => {
       visible: true
     },
     {
-      label: 'Setting',
-      key: '4',
-      icon: <SettingOutlined />,
+      label: <Link to='/'>Vouchers</Link>,
+      key: '2',
+      icon: <GiftOutlined />,
       visible: true
     },
     {
-      label: <Link to='/login'>Login</Link>,
-      key: '2',
-      icon: <LoginOutlined />,
-      visible: !isAuth()
-    },
-    {
-      label: <Link to='/login'>Logout</Link>,
+      label: <Link to='/'>My Cart</Link>,
       key: '3',
-      icon: <LogoutOutlined />,
-      visible: isAuth()
+      icon: <ShoppingCartOutlined />,
+      visible: true
     },
 
     {
@@ -62,10 +56,16 @@ const Avatars = () => {
       visible: true
     },
     {
-      label: 'Close',
-      key: '5',
-      icon: <CloseOutlined />,
+      label: 'Setting',
+      key: '4',
+      icon: <SettingOutlined />,
       visible: true
+    },
+    {
+      label: <Link to='/login'>Logout</Link>,
+      key: '5',
+      icon: <LogoutOutlined />,
+      visible: isAuth()
     }
   ];
 

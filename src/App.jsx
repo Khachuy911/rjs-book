@@ -18,11 +18,11 @@ function App() {
               key={index}
               path={route.path}
               element={
-                <RouteGuard>
-                  <Layout>
+                <Layout>
+                  <RouteGuard>
                     <Pages />
-                  </Layout>
-                </RouteGuard>
+                  </RouteGuard>
+                </Layout>
               }
             />
           );
