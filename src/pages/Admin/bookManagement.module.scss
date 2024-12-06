@@ -6,12 +6,23 @@
   //   border: 1px solid #ccc;
 }
 
-.statis {
-  margin: 50px 0px 100px;
-  // background-color: antiquewhite;
-}
-
-.title {
+.selectMonth {
   display: block;
   text-align: right;
+}
+
+.statis {
+  margin: 50px 0px 100px;
+}
+
+.cardStat {
+  background-color: rgb(241, 241, 241);
+  box-shadow: 1px 1px 5px rgb(202, 201, 201);
+}
+
+.chartPie {
+  display: flex;
+  justify-content: space-around;
+  margin: 100px 0px;
+  // height: 600px;
 }

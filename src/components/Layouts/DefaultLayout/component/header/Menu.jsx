@@ -4,14 +4,14 @@ import { Menu } from 'antd';
 
 function Menus() {
   const location = useLocation();
-  const items1 = ['HOME', 'SHOPPING CART', 'FLASH SALE', 'UPLOAD'].map((key) => {
+  const items1 = ['HOME', 'SHOPPING CART', 'ADMIN', 'UPLOAD'].map((key) => {
     let path;
     switch (key) {
       case 'SHOPPING CART':
         path = '/carts';
         break;
-      case 'FLASH SALE':
-        path = '/sales';
+      case 'ADMIN':
+        path = '/admin-book';
         break;
       case 'UPLOAD':
         path = '/uploads';

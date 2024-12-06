@@ -6,8 +6,10 @@ import UploadPage from '../pages/Upload/Upload.jsx';
 
 export const publicRoutes = [
   { path: '/login', element: LoginPage },
-  { path: '/', element: HomePage, layout: DefaultLayout },
-  { path: '/admin-book', element: BookManagement, layout: DefaultLayout }
+  { path: '/', element: HomePage, layout: DefaultLayout }
 ];
 
-export const privateRoutes = [{ path: '/uploads', element: UploadPage, layout: DefaultLayout }];
+export const privateRoutes = [
+  { path: '/uploads', element: UploadPage, layout: DefaultLayout },
+  { path: '/admin-book', element: BookManagement, layout: DefaultLayout }
+];

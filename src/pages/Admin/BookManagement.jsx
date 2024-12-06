@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 import { Card, Col, Divider, Dropdown, Row, Space, Statistic, Table, Typography } from 'antd';
-import { getAllBook, getStatsBookByMonth } from '../../services/books';
+import { getAllBook, getDataPieChart, getStatsBookByMonth } from '../../services/books';
 import style from './bookManagement.module.scss';
 import { ArrowDownOutlined, ArrowUpOutlined, DownOutlined } from '@ant-design/icons';
 import { cleanup } from '@testing-library/react';
+import Charts from '../../components/Chart/LineChart';
+import Chart from 'chart.js/auto';
+import { CategoryScale } from 'chart.js';
+import { ChartType } from '../../enums/chartType.enum';
 
 const columns = [
   {
-    title: 'ID',
-    dataIndex: 'id'
+    title: 'Code',
+    dataIndex: 'code'
   },
   {
     title: 'Name',
@@ -21,14 +25,24 @@ const columns = [
     dataIndex: 'author'
   },
   {
+    title: 'Warehouse Price',
+    dataIndex: 'warehousePrice',
+    sorter: (a, b) => a.warehousePrice - b.warehousePrice
+  },
+  {
     title: 'Price',
     dataIndex: 'price',
     sorter: (a, b) => a.price - b.price
   },
+
   {
     title: 'Number Of Page',
     dataIndex: 'numberPage',
     sorter: (a, b) => a.numberPage - b.numberPage
+  },
+  {
+    title: 'Quantity sold',
+    dataIndex: 'quantitySold'
   }
 ];
 
@@ -86,16 +100,101 @@ const months = [
     label: '12'
   }
 ];
+
+Chart.register(CategoryScale);
+
 const BookManagement = () => {
   let [books, setBooks] = useState([]);
   let [stats, setStats] = useState({});
   let [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  let [chartLineData, setChartLineData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: 'books',
+        data: [],
+        backgroundColor: [
+          'rgba(255, 255, 255, 0.6)',
+          'rgba(255, 255, 255, 0.6)',
+          'rgba(255, 255, 255, 0.6)'
+        ],
+        borderColor: 'red',
+        borderWidth: 2
+      }
+    ]
+  });
+
+  let [chartPieRevenueData, setChartPieRevenueData] = useState({
+    labels: ['Expense', 'Profit'],
+    datasets: [
+      {
+        label: '$',
+        data: [getDataPieChart(10000), getDataPieChart(4000)],
+        backgroundColor: ['blue', '#50AF95'],
+        borderColor: 'white',
+        borderWidth: 1
+      }
+    ]
+  });
+
+  let [chartPieUserBuyData, setChartPieUserBuyData] = useState({
+    labels: ['Offline', 'Online', 'Visiting guests'],
+    datasets: [
+      {
+        label: 'Users',
+        data: [getDataPieChart(300), getDataPieChart(900), getDataPieChart(300)],
+        backgroundColor: ['#50AF95', '#f3ba2f', 'red'],
+        borderColor: 'white',
+        borderWidth: 1
+      }
+    ]
+  });
+
+  let [chartPieInvenData, setChartPieInvenData] = useState({
+    labels: ['Sold', 'Inventory', 'Returns'],
+    datasets: [
+      {
+        label: 'books',
+        data: [getDataPieChart(700), getDataPieChart(400), getDataPieChart(50)],
+        backgroundColor: ['#50AF95', '#f3ba2f', 'red'],
+        borderColor: 'white',
+        borderWidth: 1
+      }
+    ]
+  });
 
   useEffect(() => {
     let data = getAllBook(currentMonth);
     let dataStat = getStatsBookByMonth(currentMonth);
-    setBooks(data);
+    setBooks(data.sort((a, b) => +b.quantitySold - +a.quantitySold));
     setStats(dataStat);
+    setChartLineData({
+      labels: data.sort((a, b) => a.day - b.day).map((item) => item.name),
+      datasets: [
+        {
+          label: 'Quantity',
+          data: data.map((item) => item.quantitySold),
+          backgroundColor: [
+            'rgba(255, 255, 255, 0.6)',
+            'rgba(255, 255, 255, 0.8)',
+            'rgba(255, 255, 255, 0.6)'
+          ],
+          borderColor: 'red',
+          borderWidth: 2
+        },
+        {
+          label: 'Profit',
+          data: data.map((item) => item.price * item.quantitySold),
+          backgroundColor: [
+            'rgba(255, 255, 255, 0.6)',
+            'rgba(255, 255, 255, 0.8)',
+            'rgba(255, 255, 255, 0.6)'
+          ],
+          borderColor: 'green',
+          borderWidth: 2
+        }
+      ]
+    });
 
     return () => {
       cleanup();
@@ -109,7 +208,7 @@ const BookManagement = () => {
   return (
     <div className={clsx(style.wrapper)}>
       <div className={clsx(style.statis)}>
-        <div className={clsx(style.title)}>
+        <div className={clsx(style.selectMonth)}>
           <Dropdown
             menu={{
               items: months,
@@ -131,9 +230,9 @@ const BookManagement = () => {
         </Divider>
         <Row gutter={16}>
           <Col span={8}>
-            <Card bordered={true}>
+            <Card className={clsx(style.cardStat)} hoverable bordered>
               <Statistic
-                title='Active'
+                title='Sales'
                 value={stats.active}
                 precision={2}
                 valueStyle={{
@@ -145,9 +244,9 @@ const BookManagement = () => {
             </Card>
           </Col>
           <Col span={8}>
-            <Card bordered={true}>
+            <Card className={clsx(style.cardStat)} hoverable bordered>
               <Statistic
-                title='Idle'
+                title='Visitors'
                 value={stats.idle}
                 precision={2}
                 valueStyle={{
@@ -159,9 +258,9 @@ const BookManagement = () => {
             </Card>
           </Col>
           <Col span={8}>
-            <Card bordered={true}>
+            <Card className={clsx(style.cardStat)} hoverable bordered>
               <Statistic
-                title='Inactive'
+                title='Orders'
                 value={stats.inActive}
                 precision={2}
                 valueStyle={{
@@ -175,7 +274,36 @@ const BookManagement = () => {
         </Row>
       </div>
 
-      <div>
+      <div className='chart'>
+        <Charts
+          chartData={chartLineData}
+          chartName={'Productivity chart'}
+          chartText={'Statistics on the number of books sold by month'}
+          chartType={ChartType.Line}
+        />
+        <div className={clsx(style.chartPie)}>
+          <Charts
+            chartData={chartPieRevenueData}
+            chartName={'Monthly revenue statistics'}
+            chartText={'Statistics on the number of books sold by day'}
+            chartType={ChartType.Pie}
+          />
+          <Charts
+            chartData={chartPieUserBuyData}
+            chartName={'Statistics on user purchases'}
+            chartText={'Statistics on the number of books sold by month'}
+            chartType={ChartType.Pie}
+          />
+          <Charts
+            chartData={chartPieInvenData}
+            chartName={'Inventory statistics'}
+            chartText={'Statistics on the number of books sold by year'}
+            chartType={ChartType.Pie}
+          />
+        </div>
+      </div>
+
+      <div className='sell-rate'>
         <Divider orientation='left' plain>
           <h2>Sell Rating</h2>
         </Divider>

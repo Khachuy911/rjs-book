@@ -8,6 +8,7 @@ function Contents({ children }) {
   } = theme.useToken();
   return (
     <Layout
+      cla
       style={{
         marginLeft: 195,
         marginTop: 30,
